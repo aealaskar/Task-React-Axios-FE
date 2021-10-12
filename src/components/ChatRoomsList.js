@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import ChatRoomitem from './ChatRoomitem';
-import CreateRoomModal from './CreateRoomModal';
+import React, { useState } from "react";
+import ChatRoomitem from "./ChatRoomitem";
+import CreateRoomModal from "./CreateRoomModal";
 
 function ChatRoomsList(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +17,11 @@ function ChatRoomsList(props) {
       <button className="btn">
         <i className="fa fa-plus"></i>
         <span onClick={openModal}>New room</span>
-        <CreateRoomModal isOpen={isOpen} closeModal={closeModal} />
+        <CreateRoomModal
+          isOpen={isOpen}
+          closeModal={closeModal}
+          createRoom={props.createRoom}
+        />
       </button>
       <center>
         <div className="chatlist__heading">
