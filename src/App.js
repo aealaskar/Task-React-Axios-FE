@@ -37,9 +37,43 @@ function App() {
     }
   };
 
-  const deleteRoom = (id) => {
+  const deleteRoom = async (roomId) => {
     // to do : call BE to delete a room
+    try {
+      const response = await axios.delete(
+        `https://coded-task-axios-be.herokuapp.com/rooms/${roomId}`
+      );
+      let tempRoom = rooms.filter((room) => room.id !== roomId);
+      setRooms(tempRoom);
+    } catch (error) {
+      alert(error);
+    }
   };
+
+  const updateRoom = async (newRoom, roomId) => {
+    try {
+      const response = await axios.put(
+        `https://coded-task-axios-be.herokuapp.com/rooms/${roomId}`,
+        newRoom
+      );
+      let updatedRoom = rooms.map((room) =>
+        room.id === roomId ? response.data : room
+      );
+      setRooms(updatedRoom);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  // const createMsg = async (roomId) => {
+  //   try {
+  //     const response = await axios.post(
+  //       `https://coded-task-axios-be.herokuapp.com/rooms/msg/${roomId}`
+  //     );
+  //   } catch (error) {
+  //     alert(error);
+  //   }
+  // };
 
   return (
     <div className="__main">
@@ -50,7 +84,12 @@ function App() {
           </Route>
           <Route exact path="/">
             <center>
-              <ChatRoomsList rooms={rooms} createRoom={createRoom} />
+              <ChatRoomsList
+                rooms={rooms}
+                createRoom={createRoom}
+                deleteRoom={deleteRoom}
+                updateRoom={updateRoom}
+              />
             </center>
           </Route>
         </Switch>
